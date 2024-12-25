@@ -67,41 +67,41 @@
 
      <!--  Section du Modal  -->
      <section id="section2">
-        <div id="taskModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden ">
-            <div class="bg-white p-8 rounded-lg shadow-lg md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
-                <h2 class="text-xl font-semibold mb-4 ml-20" id="modalTitle">Ajouter une tâche</h2>
+        <div id="taskModal">
+            <div>
+                <h2 id="modalTitle">Ajouter une tâche</h2>
                 <form id="taskForm">
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium">Titre</label>
-                        <input type="text" id="title" class="w-full border p-2 rounded" required />
+                    <div>
+                        <label>Titre</label>
+                        <input type="text" id="title" required />
                     </div>
                     <div class="mb-4">
-                        <label class="block text-sm font-medium">Description</label>
-                        <textarea id="description" class="w-full border p-2 rounded" required></textarea>
+                        <label>Description</label>
+                        <textarea id="description" required></textarea>
                     </div>
                     <div class="mb-4">
-                        <label class="block text-sm font-medium">Date</label>
-                        <input type="date" id="date" class="w-full border p-2 rounded" required />
+                        <label>Date</label>
+                        <input type="date" id="date" required />
                     </div>
                     <div class="mb-4">
-                        <label class="block text-sm font-medium">État</label>
-                        <div class="flex gap-4">
+                        <label>État</label>
+                        <div>
                             <label><input type="radio" name="status" value="todo" required /> To-Do</label>
                             <label><input type="radio" name="status" value="doing" /> Doing</label>
                             <label><input type="radio" name="status" value="done" /> Done</label>
                         </div>
                     </div>
                     <div class="mb-4">
-                        <label class="block text-sm font-medium">Priorité</label>
-                        <select id="priority" class="w-full border p-2 rounded">
+                        <label>Priorité</label>
+                        <select id="priority">
                             <option value="P1">P1</option>
                             <option value="P2">P2</option>
                             <option value="P3">P3</option>
                         </select>
                     </div>
                     <div class="flex justify-end">
-                        <button onclick="saveTask()" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Enregistrer</button>
-                        <button onclick="closeModal()" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Anuler</button>
+                        <button onclick="saveTask()" type="button">Enregistrer</button>
+                        <button onclick="closeModal()" type="button">Anuler</button>
                     </div>
                 </form>
             </div>
