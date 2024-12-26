@@ -77,7 +77,7 @@
       // Si tout est valide, soumettre le formulaire
       if (valid) {
         alert('Connexion réussie !');
-        // Vous pouvez ici envoyer le formulaire avec `this.submit();`
+        // aprés je vais envoyer le formulaire avec: `this.submit();`
       }
     });
   </script>
