@@ -19,16 +19,18 @@
     <!-- Section droite -->
     <div class="w-1/2 p-8">
       <h2 class="text-2xl font-bold text-gray-100 mb-4">Connexion</h2>
-      <form action="#" method="POST" class="space-y-4">
+      <form id="loginForm" class="space-y-4">
         <div>
           <label for="email" class="block text-sm font-medium text-gray-300">Adresse Email</label>
           <input type="email" id="email" name="email" required
                  class="w-full mt-1 px-4 py-2 border border-gray-600 rounded-lg shadow-sm bg-gray-700 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <p id="emailError" class="text-red-500 text-sm hidden">Veuillez entrer une adresse email valide.</p>
         </div>
         <div>
           <label for="password" class="block text-sm font-medium text-gray-300">Mot de Passe</label>
           <input type="password" id="password" name="password" required
                  class="w-full mt-1 px-4 py-2 border border-gray-600 rounded-lg shadow-sm bg-gray-700 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <p id="passwordError" class="text-red-500 text-sm hidden">Le mot de passe doit contenir au moins 6 caractères.</p>
         </div>
         <button type="submit"
                 class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">
@@ -40,5 +42,43 @@
       </p>
     </div>
   </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      // Empêche l'envoi du formulaire
+      event.preventDefault();
+
+      // Récupération des champs
+      const email = document.getElementById('email');
+      const password = document.getElementById('password');
+      const emailError = document.getElementById('emailError');
+      const passwordError = document.getElementById('passwordError');
+
+      // Réinitialisation des messages d'erreur
+      emailError.classList.add('hidden');
+      passwordError.classList.add('hidden');
+
+      let valid = true;
+
+      // Validation de l'email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email.value || !emailRegex.test(email.value)) {
+        emailError.classList.remove('hidden');
+        valid = false;
+      }
+
+      // Validation du mot de passe
+      if (!password.value || password.value.length < 6) {
+        passwordError.classList.remove('hidden');
+        valid = false;
+      }
+
+      // Si tout est valide, soumettre le formulaire
+      if (valid) {
+        alert('Connexion réussie !');
+        // Vous pouvez ici envoyer le formulaire avec `this.submit();`
+      }
+    });
+  </script>
 </body>
 </html>
