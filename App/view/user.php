@@ -75,6 +75,40 @@
         </div>
     </div>
 
-   
+  
+
+    <!-- JavaScript -->
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const body = document.body;
+        const userIcon = document.getElementById('user-icon');
+        const loginModal = document.getElementById('login-modal');
+        const closeModal = document.getElementById('close-modal');
+
+        // Toggle Dark Mode
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            if (body.classList.contains('dark')) {
+                themeIcon.innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21.752 15.002A9.718 9.718 0 0112 21c-5.523 0-10-4.477-10-10 0-4.106 2.468-7.626 6.002-9.168a0.75 0.75 0 01.998.75A7.5 7.5 0 1019.418 14a0.75 0.75 0 01.75.998c-.523 1.153-1.192 2.198-2.002 3.004z" />
+                `;
+            } else {
+                themeIcon.innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-7.364l-1.414 1.414M6.05 17.95l-1.414-1.414M18.364 18.364l-1.414-1.414M6.05 6.05L4.636 7.464M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                `;
+            }
+        });
+
+        // Show Login Modal
+        userIcon.addEventListener('click', () => {
+            loginModal.classList.remove('hidden');
+        });
+
+        // Close Login Modal
+        closeModal.addEventListener('click', () => {
+            loginModal.classList.add('hidden');
+        });
+    </script>
 </body>
 </html>
