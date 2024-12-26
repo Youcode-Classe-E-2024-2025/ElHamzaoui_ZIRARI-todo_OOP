@@ -15,4 +15,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $taskModel->addTask($title, $description, $date, $status, $priority);
     exit;
 }
+
+$taskModel2 = new TaskModel($pdo);
+
+// Vérifie si l'utilisateur a demandé à supprimer une tâche
+if (isset($_GET['delete'])) {
+    $taskModel2->deleteTask($_GET['delete']);
+    header("Location: /index.php");
+    exit;
+}
+
+// Récupérer toutes les tâches pour affichage
+$tasks = $taskModel2->getAllTasks();
+
+// Inclure la vue
+require_once '../Views/taskForm.php';
 ?>
