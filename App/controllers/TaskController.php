@@ -1,6 +1,8 @@
 <?php
+
 require_once '../model/TaskModel.php';
-require_once '../config.php';
+
+require_once '../../config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'];
@@ -12,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $taskModel = new TaskModel($pdo);
     $taskModel->addTask($title, $description, $date, $status, $priority);
 
-    header("Location: /index.php?task=added");
+
     exit;
 }
 ?>
