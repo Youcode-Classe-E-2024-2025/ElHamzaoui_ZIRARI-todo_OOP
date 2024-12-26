@@ -51,5 +51,17 @@
                 </ul>
             </div>
 
+            <!-- In Progress Section -->
+            <div id="inprogress" class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border-t-4 border-yellow-500">
+                <h2 class="text-2xl font-semibold text-yellow-600 dark:text-yellow-400 mb-4">In Progress</h2>
+                <ul class="space-y-4">
+                    <li class="task bg-yellow-50 dark:bg-gray-700 p-4 rounded-lg shadow-sm flex justify-between items-center">
+                        <span>Fix Navbar Bug</span>
+                        <button class="move-btn bg-yellow-500 text-white px-3 py-1 rounded-full text-sm">Move</button>
+                    </li>
+                </ul>
+            </div>
+
+           
 </body>
 </html>
