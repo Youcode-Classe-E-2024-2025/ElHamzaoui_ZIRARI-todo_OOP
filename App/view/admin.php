@@ -66,7 +66,7 @@
     </div>
 
      <!--  Section du Modal  -->
-     <section id="section2">
+     <section id="section2" >
         <div id="taskModal">
             <div>
                 <h2 id="modalTitle">Ajouter une tâche</h2>
