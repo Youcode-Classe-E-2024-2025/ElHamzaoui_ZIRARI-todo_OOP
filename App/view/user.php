@@ -16,7 +16,7 @@
     <header class="bg-white dark:bg-gray-800 shadow-md py-4 px-6 flex justify-between items-center">
         <!-- Logo -->
         <div class="flex items-center space-x-4">
-        <img src="" alt="Logo"  class="h-10 w-10 rounded-full">
+        <img src="asset/images/logo.png" alt="Logo"  class="h-12 w-13 rounded-full">
             
             <h1 class="text-xl font-bold text-gray-800 dark:text-gray-200">TaskFlow</h1>
         </div>

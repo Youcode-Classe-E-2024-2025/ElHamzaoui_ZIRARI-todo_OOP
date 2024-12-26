@@ -12,7 +12,7 @@
     <!-- Header -->
     <header class="bg-blue-900 text-white flex justify-between items-center p-4">
         <div class="flex items-center space-x-4">
-            <img src="" alt="Logo" class="w-10 h-10">
+            <img src="asset/images/logo.png" alt="Logo" class="w-10 h-10">
             <h1 class="text-xl font-bold">Interface Admin</h1>
         </div>
         <button class="flex items-center space-x-2 text-white">
