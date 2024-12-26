@@ -125,17 +125,69 @@
             display: block;
         }
 
-        /* Content Styles */
-        .section h2 {
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 450px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-content h2 {
             font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
-        .section p {
+        .modal-content form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-content label {
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .modal-content input, .modal-content textarea, .modal-content select {
+            margin-bottom: 15px;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .modal-content button {
+            padding: 12px 20px;
             font-size: 16px;
+            cursor: pointer;
+            background-color: #3182ce;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
         }
 
+        .modal-content button.cancel {
+            background-color: #e53e3e;
+        }
+
+        .modal-content button:hover {
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
@@ -169,7 +221,7 @@
         <div class="main-content">
             <!-- Buttons in Content Area -->
             <div class="buttons">
-                <button class="btn-add" onclick="addTask()">Ajouter une tâche</button>
+                <button class="btn-add" onclick="openModal()">Ajouter une tâche</button>
                 <button class="btn-assign" onclick="assignTask()">Assigner une tâche</button>
             </div>
 
@@ -179,39 +231,67 @@
                 <div id="tasks" class="section">
                     <h2>Gestion des Tâches</h2>
                     <p>Voici la liste des tâches.</p>
-                    <!-- Task content goes here -->
                 </div>
-
                 <div id="users" class="section">
                     <h2>Gestion des Utilisateurs</h2>
                     <p>Voici la liste des utilisateurs.</p>
-                    <!-- User content goes here -->
                 </div>
-
                 <div id="assignments" class="section">
                     <h2>Gestion des Assignements</h2>
                     <p>Voici la liste des assignements.</p>
-                    <!-- Assignments content goes here -->
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Script for handling the display of sections -->
-    <script>
-        function showSection(section) {
-            // Hide all sections
-            document.querySelectorAll('.section').forEach(function(sec) {
-                sec.classList.remove('active');
-            });
+    <!-- Modal -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <h2>Ajouter une Tâche</h2>
+            <form id="taskForm" method="POST" action="App/Controllers/TaskController.php">
+                <div>
+                    <label for="title">Titre</label>
+                    <input type="text" id="title" name="title" required />
+                </div>
+                <div>
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" required></textarea>
+                </div>
+                <div>
+                    <label for="date">Date</label>
+                    <input type="date" id="date" name="date" required />
+                </div>
+                <div>
+                    <label>État</label>
+                    <div>
+                        <label><input type="radio" name="status" value="tache_simple" required /> Tâche simple</label>
+                        <label><input type="radio" name="status" value="bug" /> Bug</label>
+                        <label><input type="radio" name="status" value="Feature" /> Feature</label>
+                    </div>
+                </div>
+                <div>
+                    <label for="priority">Priorité</label>
+                    <select id="priority" name="priority">
+                        <option value="P1">P1</option>
+                        <option value="P2">P2</option>
+                        <option value="P3">P3</option>
+                    </select>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <button type="submit">Enregistrer</button>
+                    <button type="button" class="cancel" onclick="closeModal()">Annuler</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-            // Show the clicked section
-            document.getElementById(section).classList.add('active');
+    <script>
+        function openModal() {
+            document.getElementById('taskModal').style.display = 'flex';
         }
 
-        function addTask() {
-            alert("Ajouter une tâche");
-            // Logic for adding a task goes here
+        function closeModal() {
+            document.getElementById('taskModal').style.display = 'none';
         }
 
         function assignTask() {
@@ -219,5 +299,6 @@
             // Logic for assigning a task goes here
         }
     </script>
+
 </body>
 </html>
