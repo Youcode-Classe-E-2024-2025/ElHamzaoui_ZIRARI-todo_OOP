@@ -33,6 +33,23 @@
         </div>
     </header>
 
-   
+    <!-- Main Content -->
+    <div class="container mx-auto py-12 px-4">
+        <!-- Page Title -->
+        <h1 class="text-4xl font-extrabold text-center mb-12">TaskFlow Dashboard</h1>
+
+        <!-- Sections -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- To Do Section -->
+            <div id="todo" class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border-t-4 border-blue-500">
+                <h2 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">To Do</h2>
+                <ul class="space-y-4">
+                    <li class="task bg-blue-50 dark:bg-gray-700 p-4 rounded-lg shadow-sm flex justify-between items-center">
+                        <span>Design Homepage</span>
+                        <button class="move-btn bg-blue-500 text-white px-3 py-1 rounded-full text-sm">Move</button>
+                    </li>
+                </ul>
+            </div>
+
 </body>
 </html>
