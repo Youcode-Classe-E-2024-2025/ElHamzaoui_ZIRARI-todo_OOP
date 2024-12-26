@@ -207,18 +207,19 @@
         </button>
     </header>
 
-    <div style="display: flex;">
-        <!-- Sidebar -->
-        <div class="sidebar">
+<div style="display: flex;">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
             <ul>
                 <li><button onclick="showSection('tasks')">Tâches</button></li>
                 <li><button onclick="showSection('users')">Utilisateurs</button></li>
                 <li><button onclick="showSection('assignments')">Assignements</button></li>
             </ul>
-        </div>
+    </div>
 
-        <!-- Main Content -->
-        <div class="main-content">
+    <!-- Main Content -->
+    <div class="main-content">
             <!-- Buttons in Content Area -->
             <div class="buttons">
                 <button class="btn-add" onclick="openModal()">Ajouter une tâche</button>
@@ -226,23 +227,65 @@
             </div>
 
             <!-- Content Box for Displaying Sections -->
-            <div class="content-box">
-                <!-- Sections -->
-                <div id="tasks" class="section">
-                    <h2>Gestion des Tâches</h2>
-                    <p>Voici la liste des tâches.</p>
-                </div>
-                <div id="users" class="section">
-                    <h2>Gestion des Utilisateurs</h2>
-                    <p>Voici la liste des utilisateurs.</p>
-                </div>
-                <div id="assignments" class="section">
-                    <h2>Gestion des Assignements</h2>
-                    <p>Voici la liste des assignements.</p>
-                </div>
+        <div class="content-box">
+            <!-- Sections -->
+            <div id="tasks" class="section">
+                <h2>Gestion des Tâches</h2>
+                <p>Voici la liste des tâches.</p>
+            
+                <!-- Liste des tâches -->
+                <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th>État</th>
+                        <th>Priorité</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($tasks as $task): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($task['title_tache']) ?></td>
+                            <td><?= htmlspecialchars($task['descr_tache']) ?></td>
+                            <td><?= $task['date_tache'] ?></td>
+                            <td><?= $task['status_tache'] ?></td>
+                            <td><?= $task['priority_tache'] ?></td>
+                            <td>
+                                <!-- Icone de modification -->
+                                <a href="edit_task.php?id=<?= $task['id_tache'] ?>" style="color: blue; margin-right: 10px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path d="M12.146 0.854a1 1 0 0 1 1.414 1.414L4.707 10.707a1 1 0 0 1-.242.179L1.144 12.85a1 1 0 0 1-.75 1.06l-1.24.415a1 1 0 0 1-1.061-.75l.416-1.242a1 1 0 0 1 .179-.242L10.707 3.707a1 1 0 0 1 1.414 1.414l-8.5 8.5 1.064-.5-.5-.999-.5.5 1-.5-.5.5 1.5 3.5a2 2 0 0 1-3.5-3z"/>
+                                    </svg>
+                                </a>
+        
+                                <!-- Icone de suppression -->
+                                <a href="?delete=<?= $task['id_tache'] ?>" style="color: red;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                        <path d="M5.5 0a.5.5 0 0 0-.5.5V1H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-.5V.5a.5.5 0 0 0-.5-.5H5.5zm0 1h5V1h-5v.5zM12 3v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V3h8z"/>
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+                </table>
+            </div>
+
+            <div id="users" class="section">
+                <h2>Gestion des Utilisateurs</h2>
+                <p>Voici la liste des utilisateurs.</p>
+            </div>
+
+            <div id="assignments" class="section">
+            <h2>Gestion des Assignements</h2>
+            <p>Voici la liste des assignements.</p>
             </div>
         </div>
     </div>
+</div>
 
     <!-- Modal -->
     <div id="taskModal" class="modal">
