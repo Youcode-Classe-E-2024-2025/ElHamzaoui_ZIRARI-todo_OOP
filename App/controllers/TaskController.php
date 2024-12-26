@@ -13,8 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $taskModel = new TaskModel($pdo);
     $taskModel->addTask($title, $description, $date, $status, $priority);
-
-
     exit;
 }
 ?>

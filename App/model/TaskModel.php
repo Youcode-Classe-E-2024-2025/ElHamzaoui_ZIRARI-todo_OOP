@@ -25,5 +25,20 @@ class TaskModel {
             ':priority' => $priority
         ]);
     }
+
+     // Méthode pour récupérer toutes les tâches
+     public function getAllTasks() {
+        $sql = "SELECT * FROM tasks";
+        $stmt = $this->pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+     // Méthode pour supprimer une tâche
+     public function deleteTask($id_tache) {
+        $sql = "DELETE FROM tasks WHERE id_tache = :id_tache";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':id_tache' => $id_tache]);
+    }
+
 }
 ?>
