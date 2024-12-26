@@ -72,7 +72,7 @@ function saveTask() {
     }
 
     // Si tout est valide, soumettre le formulaire
-    alert("Tâche enregistrée avec succès!");
+    // alert("Tâche enregistrée avec succès!");
     // Ici, tu peux ajouter le code pour sauvegarder la tâche, par exemple en appelant une fonction pour envoyer les données au serveur
     // closeModal(); // Décommente si tu veux fermer le modal après enregistrement
     return true;  // Retourne true pour indiquer que la validation a réussi
