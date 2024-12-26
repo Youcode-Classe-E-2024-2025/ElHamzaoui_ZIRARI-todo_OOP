@@ -4,112 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interface Admin</title>
-    <link rel="stylesheet" href="asset/admin.css">
+   
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-100">
 
     <!-- Header -->
-    <header>
-        <div style="display: flex; align-items: center;">
-            <!-- Logo -->
-            <img src="https://via.placeholder.com/50" alt="Logo">
-            <h1>Interface Admin</h1>
+    <header class="bg-blue-900 text-white flex justify-between items-center p-4">
+        <div class="flex items-center space-x-4">
+            <img src="" alt="Logo" class="w-10 h-10">
+            <h1 class="text-xl font-bold">Interface Admin</h1>
         </div>
-        <!-- Logout Icon -->
-        <button>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-6 h-6">
-                <path d="M17 16l4-4-4-4M7 12H3m4 0c2 0 4 2 4 4s-2 4-4 4H3c-1.1 0-2-.9-2-2v-8c0-1.1.9-2 2-2h4c2 0 4 2 4 4s-2 4-4 4H7z"></path>
-            </svg>
+        <button class="flex items-center space-x-2 text-white">
+            <img src="asset/images/dec.png" alt="Logout" class="w-6 h-6">
         </button>
     </header>
 
-    <div style="display: flex;">
+    <div class="flex">
         <!-- Sidebar -->
-        <div class="sidebar">
-            <ul>
-                <li><button onclick="showSection('tasks')">Tâches</button></li>
-                <li><button onclick="showSection('users')">Utilisateurs</button></li>
-                <li><button onclick="showSection('assignments')">Assignements</button></li>
+        <div class="w-64 bg-white shadow-lg p-:4">
+            <ul class="space-y-4">
+                <li><button onclick="showSection('tasks')" class="w-full text-left bg-gray-200 p-2 rounded hover:bg-gray-300">Tâches</button></li>
+                <li><button onclick="showSection('users')" class="w-full text-left bg-gray-200 p-2 rounded hover:bg-gray-300">Utilisateurs</button></li>
+                <li><button onclick="showSection('assignments')" class="w-full text-left bg-gray-200 p-2 rounded hover:bg-gray-300">Assignements</button></li>
             </ul>
         </div>
 
         <!-- Main Content -->
-        <div class="main-content">
-            <!-- Buttons in Content Area -->
-            <div class="buttons">
-                <button class="btn-add" onclick="addTask()">Ajouter une tâche</button>
-                <button class="btn-assign" onclick="assignTask()">Assigner une tâche</button>
+        <div class="flex-1 p-4">
+            <!-- Buttons -->
+            <div class="flex justify-between mb-4">
+                <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onclick="addTask()">Ajouter une tâche</button>
+                <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onclick="assignTask()">Assigner une tâche</button>
             </div>
 
-            <!-- Content Box for Displaying Sections -->
-            <div class="content-box">
+            <!-- Content Box -->
+            <div class="bg-white shadow-lg rounded p-4">
                 <!-- Sections -->
-                <div id="tasks" class="section">
-                    <h2>Gestion des Tâches</h2>
+                <div id="tasks" class="section hidden">
+                    <h2 class="text-xl font-bold mb-2">Gestion des Tâches</h2>
                     <p>Voici la liste des tâches.</p>
-                    <!-- Task content goes here -->
                 </div>
 
-                <div id="users" class="section">
-                    <h2>Gestion des Utilisateurs</h2>
+                <div id="users" class="section hidden">
+                    <h2 class="text-xl font-bold mb-2">Gestion des Utilisateurs</h2>
                     <p>Voici la liste des utilisateurs.</p>
-                    <!-- User content goes here -->
                 </div>
 
-                <div id="assignments" class="section">
-                    <h2>Gestion des Assignements</h2>
+                <div id="assignments" class="section hidden">
+                    <h2 class="text-xl font-bold mb-2">Gestion des Assignements</h2>
                     <p>Voici la liste des assignements.</p>
-                    <!-- Assignments content goes here -->
                 </div>
             </div>
         </div>
     </div>
 
-     <!--  Section du Modal  -->
-     <section id="section2" >
-        <div id="taskModal">
-            <div>
-                <h2 id="modalTitle">Ajouter une tâche</h2>
-                <form id="taskForm">
-                    <div>
-                        <label>Titre</label>
-                        <input type="text" id="title" required />
+    <!-- Modal -->
+    <div id="taskModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+        <div class="bg-white rounded p-6 w-96">
+            <h2 class="text-xl font-bold mb-4 text-center" id="modalTitle">Ajouter une tâche</h2>
+            <form id="taskForm" class="space-y-4">
+                <div>
+                    <label for="title" class="block text-sm font-medium">Titre</label>
+                    <input type="text" id="title" class="w-full border rounded px-2 py-1" required>
+                </div>
+                <div>
+                    <label for="description" class="block text-sm font-medium">Description</label>
+                    <textarea id="description" class="w-full border rounded px-2 py-1" required></textarea>
+                </div>
+                <div>
+                    <label for="date" class="block text-sm font-medium">Date</label>
+                    <input type="date" id="date" class="w-full border rounded px-2 py-1" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium">Type de tâche</label>
+                    <div class="space-x-4">
+                        <label><input type="radio" name="status" value="tache_simple" required> Tâche simple</label>
+                        <label><input type="radio" name="status" value="bug"> Bug</label>
+                        <label><input type="radio" name="status" value="Feature"> Feature</label>
                     </div>
-                    <div class="mb-4">
-                        <label>Description</label>
-                        <textarea id="description" required></textarea>
-                    </div>
-                    <div class="mb-4">
-                        <label>Date</label>
-                        <input type="date" id="date" required />
-                    </div>
-                    <div class="mb-4">
-                        <label>État</label>
-                        <div>
-                            <label><input type="radio" name="status" value="tache_simple" required /> tache simple </label>
-                            <label><input type="radio" name="status" value="bug" /> bug</label>
-                            <label><input type="radio" name="status" value="Feature" />  Feature</label>
-                        </div>
-                    </div>
-                    <div class="mb-4">
-                        <label>Priorité</label>
-                        <select id="priority">
-                            <option value="P1">P1</option>
-                            <option value="P2">P2</option>
-                            <option value="P3">P3</option>
-                        </select>
-                    </div>
-                    <div class="flex justify-end">
-                        <button onclick="saveTask()" type="button">Enregistrer</button>
-                        <button onclick="closeModal()" type="button">Anuler</button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div>
+                    <label for="priority" class="block text-sm font-medium">Priorité</label>
+                    <select id="priority" class="w-full border rounded px-2 py-1">
+                        <option value="P1">P1</option>
+                        <option value="P2">P2</option>
+                        <option value="P3">P3</option>
+                    </select>
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onclick="saveTask()">Enregistrer</button>
+                    <button type="button" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" onclick="closeModal()">Annuler</button>
+                </div>
+            </form>
         </div>
-    </section>
-    <!--  Section du Modal  -->
+    </div>
 
-     <!-- Script for handling the display of sections -->
-     <script src="asset/admin.js"> </script>
+    <!-- JavaScript -->
+    <script>
+        function showSection(section) {
+            document.querySelectorAll('.section').forEach(sec => sec.classList.add('hidden'));
+            document.getElementById(section).classList.remove('hidden');
+        }
+
+        function addTask() {
+            document.getElementById('taskModal').classList.remove('hidden');
+        }
+
+        function assignTask() {
+            alert("Assigner une tâche");
+        }
+
+        function saveTask() {
+            const title = document.getElementById('title').value.trim();
+            const description = document.getElementById('description').value.trim();
+            const date = document.getElementById('date').value;
+            const priority = document.getElementById('priority').value;
+            const status = document.querySelector('input[name="status"]:checked');
+
+            if (!title || !description || !date || !priority || !status) {
+                alert("Tous les champs sont requis !");
+                return;
+            }
+
+            alert("Tâche enregistrée avec succès !");
+            closeModal();
+        }
+
+        function closeModal() {
+            document.getElementById('taskModal').classList.add('hidden');
+        }
+    </script>
 </body>
 </html>
