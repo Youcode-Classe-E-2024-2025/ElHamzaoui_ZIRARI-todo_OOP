@@ -86,9 +86,9 @@
                     <div class="mb-4">
                         <label>État</label>
                         <div>
-                            <label><input type="radio" name="status" value="todo" required /> To-Do</label>
-                            <label><input type="radio" name="status" value="doing" /> Doing</label>
-                            <label><input type="radio" name="status" value="done" /> Done</label>
+                            <label><input type="radio" name="status" value="tache_simple" required /> tache simple </label>
+                            <label><input type="radio" name="status" value="bug" /> bug</label>
+                            <label><input type="radio" name="status" value="Feature" />  Feature</label>
                         </div>
                     </div>
                     <div class="mb-4">
