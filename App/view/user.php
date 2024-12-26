@@ -62,6 +62,19 @@
                 </ul>
             </div>
 
-           
+            <!-- Done Section -->
+            <div id="done" class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border-t-4 border-green-500">
+                <h2 class="text-2xl font-semibold text-green-600 dark:text-green-400 mb-4">Done</h2>
+                <ul class="space-y-4">
+                    <li class="task bg-green-50 dark:bg-gray-700 p-4 rounded-lg shadow-sm flex justify-between items-center">
+                        <span>Deploy to Server</span>
+                        <button class="move-btn bg-green-500 text-white px-3 py-1 rounded-full text-sm">Move</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+   
 </body>
 </html>
