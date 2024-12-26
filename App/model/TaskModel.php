@@ -40,5 +40,19 @@ class TaskModel {
         $stmt->execute([':id_tache' => $id_tache]);
     }
 
+    // Méthode pour modifier une tâche
+    public function updateTask($id_tache, $title, $description, $date, $status, $priority) {
+        $sql = "UPDATE tasks SET title_tache = :title, descr_tache = :description, date_tache = :date,
+                status_tache = :status, priority_tache = :priority WHERE id_tache = :id_tache";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ':title' => $title,
+            ':description' => $description,
+            ':date' => $date,
+            ':status' => $status,
+            ':priority' => $priority,
+            ':id_tache' => $id_tache
+        ]);
+    }
 }
 ?>
