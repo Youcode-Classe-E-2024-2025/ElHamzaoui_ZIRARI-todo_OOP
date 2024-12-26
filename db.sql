@@ -12,3 +12,4 @@ CREATE TABLE tasks (
     priority_tache ENUM('P1', 'P2', 'P3') NOT NULL  -- La priorité de la tâche (P1, P2 ou P3)
 );
 
+
