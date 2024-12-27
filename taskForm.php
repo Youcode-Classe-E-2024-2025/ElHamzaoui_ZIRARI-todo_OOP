@@ -167,8 +167,8 @@ $tasks = $taskModel->getAllTasks();  // Appeler la méthode pour obtenir toutes 
                     <p><strong>Responsable:</strong> <?php echo htmlspecialchars($tacheItem['priority_tache']); ?></p>
                 </div>
                 <!-- Boutons pour modifier et supprimer -->
-                <button onclick="window.location.href='modifier_tache.php?id=<?php echo $tacheItem['id_tache']; ?>'">Modifier</button>
-                <button onclick="window.location.href='supprimer_tache.php?id=<?php echo $tacheItem['id_tache']; ?>'">Supprimer</button>
+                <button onclick="window.location.href='TaskController.php?id=<?php echo $tacheItem['id_tache']; ?>'">Modifier</button>
+                <button onclick="window.location.href='TaskController.php?id=<?php echo $tacheItem['id_tache']; ?>'">Supprimer</button>
             </div>
         <?php endforeach; ?>
     </div>

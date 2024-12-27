@@ -1,5 +1,4 @@
 <?php
-echo"hi";
 require_once 'TaskModel.php';
 require_once 'config.php';
 
@@ -24,12 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Code pour supprimer une tâche
-if (isset($_GET['delete'])) {
-    $taskId = $_GET['delete'];
+if (isset($_GET['id'])) {
+    $taskId = $_GET['id'];
     $taskModel = new TaskModel($pdo);
     $taskModel->deleteTask($taskId);
-
     header("Location: index.php");
     exit;
 }
+
 ?>
