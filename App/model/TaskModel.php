@@ -1,58 +1,29 @@
 <?php
-// File: App/Models/TaskModel.php
 
 class TaskModel {
     private $pdo;
 
-    public function __construct($dbConnection) {
-        $this->pdo = $dbConnection;
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
     }
 
-    // Méthode pour ajouter une tâche dans la base de données
     public function addTask($title, $description, $date, $status, $priority) {
-        // Préparer la requête SQL d'insertion
-        $sql = "INSERT INTO tasks (title_tache, descr_tache, date_tache, status_tache, priority_tache)
-                VALUES (:title, :description, :date, :status, :priority)";
-
+        $sql = "INSERT INTO tasks (title_tache, descr_tache, date_tache, status_tache, priority_tache) 
+                VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->pdo->prepare($sql);
-
-        // Exécuter la requête en liant les valeurs
-        $stmt->execute([
-            ':title' => $title,
-            ':description' => $description,
-            ':date' => $date,
-            ':status' => $status,
-            ':priority' => $priority
-        ]);
+        $stmt->execute([$title, $description, $date, $status, $priority]);
     }
 
-     // Méthode pour récupérer toutes les tâches
-     public function getAllTasks() {
-        $sql = "SELECT * FROM tasks";
+    public function getAllTasks() {
+        $sql = "SELECT * FROM tasks ORDER BY date_tache DESC";
         $stmt = $this->pdo->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-     // Méthode pour supprimer une tâche
-     public function deleteTask($id_tache) {
-        $sql = "DELETE FROM tasks WHERE id_tache = :id_tache";
+    public function deleteTask($taskId) {
+        $sql = "DELETE FROM tasks WHERE id_tache = ?";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([':id_tache' => $id_tache]);
-    }
-
-    // Méthode pour modifier une tâche
-    public function updateTask($id_tache, $title, $description, $date, $status, $priority) {
-        $sql = "UPDATE tasks SET title_tache = :title, descr_tache = :description, date_tache = :date,
-                status_tache = :status, priority_tache = :priority WHERE id_tache = :id_tache";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([
-            ':title' => $title,
-            ':description' => $description,
-            ':date' => $date,
-            ':status' => $status,
-            ':priority' => $priority,
-            ':id_tache' => $id_tache
-        ]);
+        $stmt->execute([$taskId]);
     }
 }
 ?>
