@@ -1,4 +1,4 @@
--- Active: 1733826049669@@127.0.0.1@3306@cookies_session
+-- Active: 1733826049669@@127.0.0.1@3306@todo_list
 CREATE DATABASE todo_list ;
 
 USE todo_list;

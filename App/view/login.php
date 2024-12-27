@@ -8,6 +8,7 @@
 </head>
 <body class="bg-gray-900 text-gray-200 flex items-center justify-center h-screen">
   <div class="bg-gray-800 shadow-lg rounded-lg flex w-3/4 max-w-4xl">
+
     <!-- Section gauche -->
     <div class="w-1/2 bg-gray-700 text-gray-200 p-8 flex flex-col justify-center items-center">
     <img src="asset/images/logo.png" alt="Logo"  class="w-30 h-30 mb-4">
@@ -17,7 +18,8 @@
         Organisez vos tâches efficacement et améliorez votre productivité avec notre gestionnaire simple et intuitif.
       </p>
     </div>
-    <!-- Section droite -->
+
+    <!-- Section droite du formulaire -->
     <div class="w-1/2 p-8">
       <h2 class="text-2xl font-bold text-gray-100 mb-4">Connexion</h2>
       <form id="loginForm" class="space-y-4">
@@ -69,17 +71,24 @@
       }
 
       // Validation du mot de passe
-      if (!password.value || password.value.length < 6) {
-        passwordError.classList.remove('hidden');
-        valid = false;
-      }
+       const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{6,}$/;
 
-      // Si tout est valide, soumettre le formulaire
-      if (valid) {
+         if (!password.value || !passwordRegex.test(password.value)) {
+         passwordError.classList.remove('hidden');
+         passwordError.textContent = "Le mot de passe doit contenir au moins 6 caractères, incluant des lettres et des chiffres.";
+         valid = false;
+         } else {
+        passwordError.classList.add('hidden');
+         }
+
+         // Si tout est valide, soumettre le formulaire
+       if (valid) {
         alert('Connexion réussie !');
         // aprés je vais envoyer le formulaire avec: `this.submit();`
       }
     });
+
+
   </script>
 </body>
 </html>

@@ -11,7 +11,7 @@
     <!-- Header -->
     <header class="bg-blue-600 text-white flex justify-between items-center px-6 py-4">
         <div class="flex items-center">
-            <img src="asset/images/logo.png" alt="Logo" class="w-10 h-10 mr-4">
+            <img src="asset/images/logo.png" alt="Logo" class="w-20 h-15 mr-4">
             <h1 class="text-2xl font-bold">Interface Admin</h1>
         </div>
         <button class="flex items-center space-x-2">
