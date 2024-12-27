@@ -1,4 +1,4 @@
--- Active: 1733492701458@@127.0.0.1@3306@todolist
+-- Active: 1733492701458@@127.0.0.1@3306@gestion_packages
 CREATE DATABASE todo_list ;
 
 USE todo_list;
@@ -11,6 +11,7 @@ CREATE TABLE tasks (
     status_tache ENUM('tache_simple', 'bug', 'Feature') NOT NULL,  -- Le statut de la tâche (tache simple, bug ou feature)
     priority_tache ENUM('P1', 'P2', 'P3') NOT NULL  -- La priorité de la tâche (P1, P2 ou P3)
 );
+
 
 
 
