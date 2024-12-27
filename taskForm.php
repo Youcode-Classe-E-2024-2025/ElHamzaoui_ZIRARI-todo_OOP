@@ -1,3 +1,14 @@
+<?php
+// Inclure la classe Tache
+require_once 'taskModel.php';
+require_once 'config.php'; // Inclure la connexion PDO depuis config.php
+
+// Créer une instance de TaskModel en passant l'objet PDO
+$taskModel = new TaskModel($pdo);  // Ici, vous passez la connexion PDO à TaskModel
+
+// Récupérer toutes les tâches
+$tasks = $taskModel->getAllTasks();  // Appeler la méthode pour obtenir toutes les tâches
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,6 +16,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interface Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Style général */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            padding: 20px;
+        }
+
+        /* Style de la carte de chaque tâche */
+        .task-card {
+            background-color: #fff;
+            width: 300px;
+            margin: 10px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            position: relative;
+        }
+
+        .task-card:hover {
+            transform: scale(1.05);
+        }
+
+        /* Style du titre de la tâche */
+        .task-card h3 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+
+        /* Style pour les détails cachés au survol */
+        .task-details {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .task-card:hover .task-details {
+            display: block;
+        }
+
+        /* Style pour les boutons */
+        .task-card button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .task-card button:hover {
+            background-color: #45a049;
+        }
+
+        /* Style du formulaire */
+        form {
+            width: 50%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        form input, form textarea, form select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        form input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 font-sans">
 
@@ -43,6 +156,23 @@
                 <div id="tasks" class="section hidden">
                     <h2 class="text-xl font-bold mb-4">Gestion des Tâches</h2>
                     <p>Voici la liste des tâches.</p>
+                    <div class="container">
+        <?php foreach ($tasks as $tacheItem): ?>
+            <div class="task-card">
+                <h3><?php echo htmlspecialchars($tacheItem['title_tache']); ?></h3>
+                <div class="task-details">
+                    <p><strong>Description:</strong> <?php echo htmlspecialchars($tacheItem['descr_tache']); ?></p>
+                    <p><strong>Date d'échéance:</strong> <?php echo htmlspecialchars($tacheItem['date_tache']); ?></p>
+                    <p><strong>Priorité:</strong> <?php echo htmlspecialchars($tacheItem['status_tache']); ?></p>
+                    <p><strong>Responsable:</strong> <?php echo htmlspecialchars($tacheItem['priority_tache']); ?></p>
+                </div>
+                <!-- Boutons pour modifier et supprimer -->
+                <button onclick="window.location.href='modifier_tache.php?id=<?php echo $tacheItem['id_tache']; ?>'">Modifier</button>
+                <button onclick="window.location.href='supprimer_tache.php?id=<?php echo $tacheItem['id_tache']; ?>'">Supprimer</button>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
                 </div>
                 <div id="users" class="section hidden">
                     <h2 class="text-xl font-bold mb-4">Gestion des Utilisateurs</h2>
