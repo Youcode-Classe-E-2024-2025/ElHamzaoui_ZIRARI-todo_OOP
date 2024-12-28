@@ -147,7 +147,9 @@ $tasks = $taskModel->getAllTasks();  // Appeler la méthode pour obtenir toutes 
             <!-- Buttons in Content Area -->
             <div class="flex justify-between mb-6">
                 <button class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" onclick="openModal()">Ajouter une tâche</button>
-                <button class="px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600" onclick="assignTask()">Assigner une tâche</button>
+                <button onclick="openAssignModal()" class="px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+               Assigner une tâche
+           </button>
             </div>
 
             <!-- Content Box for Displaying Sections -->
@@ -227,6 +229,52 @@ $tasks = $taskModel->getAllTasks();  // Appeler la méthode pour obtenir toutes 
         </div>
     </div>
 
+
+    <!-- Modal Assignation -->
+<div id="assignModal" class="modal fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+    <div class="bg-white p-6 rounded shadow-lg w-96">
+        <h2 class="text-xl font-bold text-center mb-4">Assigner une Tâche</h2>
+        <form id="assignForm" action="assignController.php" method="POST" class="space-y-4">
+            <!-- Liste des utilisateurs -->
+            <div>
+                <label for="user_id" class="block text-sm font-medium">Utilisateur</label>
+                <select id="user_id" name="user_id" required class="w-full px-4 py-2 border rounded">
+                    <?php foreach ($users as $user): ?>
+                        <option value="<?php echo $user['id_user']; ?>"><?php echo htmlspecialchars($user['email_user']); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            
+            <!-- Liste des tâches -->
+            <div>
+                <label for="task_id" class="block text-sm font-medium">Tâche</label>
+                <select id="task_id" name="task_id" required class="w-full px-4 py-2 border rounded">
+                    <?php foreach ($tasks as $task): ?>
+                        <option value="<?php echo $task['id_tache']; ?>"><?php echo htmlspecialchars($task['title_tache']); ?> - <?php echo htmlspecialchars($task['date_tache']); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <!-- État de la tâche (par défaut 'to_do') -->
+            <div>
+                <label for="status" class="block text-sm font-medium">État de la Tâche</label>
+                <select id="status" name="status" required class="w-full px-4 py-2 border rounded">
+                    <option value="to_do">To Do</option>
+                    <option value="doing">Doing</option>
+                    <option value="done">Done</option>
+                </select>
+            </div>
+
+            <div class="flex justify-between">
+                <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Assigner</button>
+                <button type="button" class="px-6 py-2 bg-red-500 text-white rounded hover:bg-red-600" onclick="closeAssignModal()">Annuler</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
     <script>
         function openModal() {
             document.getElementById('taskModal').classList.remove('hidden');
@@ -244,6 +292,16 @@ $tasks = $taskModel->getAllTasks();  // Appeler la méthode pour obtenir toutes 
             document.querySelectorAll('.section').forEach(section => section.classList.add('hidden'));
             document.getElementById(sectionId).classList.remove('hidden');
         }
+        // Ouvrir le modal lorsque l'on clique sur "Assigner une tâche"
+function openAssignModal() {
+    document.getElementById('assignModal').classList.remove('hidden');
+}
+
+// Fermer le modal lorsque l'on clique sur "Annuler"
+function closeAssignModal() {
+    document.getElementById('assignModal').classList.add('hidden');
+}
+
     </script>
 
 </body>
