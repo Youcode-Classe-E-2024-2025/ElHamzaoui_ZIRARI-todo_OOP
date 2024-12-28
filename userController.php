@@ -12,9 +12,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Créer une instance du modèle pour ajouter la tâche
         $userModel = new UserModel($pdo);
         $userModel->addUser($email, $password,'user');
-
-        // Rediriger après l'ajout de la tâche
-        header("Location: user.php");
+        
+        if($email == "example@example.com" && $password == "password123"){
+            // Rediriger après l'ajout de la tâche
+             header("Location: taskForm.php");
+        }else{
+             // Rediriger après l'ajout de la tâche
+             header("Location: user.php");
+        }
+       
         exit;
     }
 }
