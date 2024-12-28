@@ -22,7 +22,7 @@
     <!-- Section droite du formulaire -->
     <div class="w-1/2 p-8">
       <h2 class="text-2xl font-bold text-gray-100 mb-4">Connexion</h2>
-      <form id="loginForm" class="space-y-4">
+      <form id="loginForm" class="space-y-4" action="userController.php" method="POST">
         <div>
           <label for="email" class="block text-sm font-medium text-gray-300">Adresse Email</label>
           <input type="email" id="email" name="email" required
@@ -46,49 +46,6 @@
     </div>
   </div>
 
-  <script>
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
-      // Empêche l'envoi du formulaire
-      event.preventDefault();
-
-      // Récupération des champs
-      const email = document.getElementById('email');
-      const password = document.getElementById('password');
-      const emailError = document.getElementById('emailError');
-      const passwordError = document.getElementById('passwordError');
-
-      // Réinitialisation des messages d'erreur
-      emailError.classList.add('hidden');
-      passwordError.classList.add('hidden');
-
-      let valid = true;
-
-      // Validation de l'email
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!email.value || !emailRegex.test(email.value)) {
-        emailError.classList.remove('hidden');
-        valid = false;
-      }
-
-      // Validation du mot de passe
-       const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{6,}$/;
-
-         if (!password.value || !passwordRegex.test(password.value)) {
-         passwordError.classList.remove('hidden');
-         passwordError.textContent = "Le mot de passe doit contenir au moins 6 caractères, incluant des lettres et des chiffres.";
-         valid = false;
-         } else {
-        passwordError.classList.add('hidden');
-         }
-
-         // Si tout est valide, soumettre le formulaire
-       if (valid) {
-        alert('Connexion réussie !');
-        // aprés je vais envoyer le formulaire avec: `this.submit();`
-      }
-    });
-
-
-  </script>
+ 
 </body>
 </html>

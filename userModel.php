@@ -7,26 +7,17 @@ class UserModel {
         $this->pdo = $pdo;
     }
 
-    public function addTask($email_user, $password_users, $role_users) {
+    public function addUser($email_user, $password_users, $role_users) {
+        // Ne codons plus en dur le rôle 'user', mais utilisons un paramètre
         $sql = "INSERT INTO users (email_user, password_users, role_users) 
-                VALUES (?, ?,'user')";
+                VALUES (?, ?, ?)";
         $stmt = $this->pdo->prepare($sql);
+        
+        // Passer les 3 paramètres nécessaires
         $stmt->execute([$email_user, $password_users, $role_users]);
     }
 
-    // public function getAllTasks() {
-    //     $sql = "SELECT * FROM tasks ORDER BY date_tache DESC";
-    //     $stmt = $this->pdo->query($sql);
-    //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    // }
-
-    // public function deleteTask($taskId) {
-    //     $sql = "DELETE FROM tasks WHERE id_tache = ?";
-    //     $stmt = $this->pdo->prepare($sql);
-    //     $stmt->execute([$taskId]);
-    // }
-
-    
-    
+    // Les autres méthodes sont commentées, donc je ne les modifie pas ici.
 }
+
 ?>
