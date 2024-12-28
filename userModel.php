@@ -17,7 +17,11 @@ class UserModel {
         $stmt->execute([$email_user, $password_users, $role_users]);
     }
 
-    // Les autres méthodes sont commentées, donc je ne les modifie pas ici.
+    public function getAllUsers() {
+        $sql = "SELECT * FROM users WHERE role_users='user' ";
+        $stmt = $this->pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 
 ?>

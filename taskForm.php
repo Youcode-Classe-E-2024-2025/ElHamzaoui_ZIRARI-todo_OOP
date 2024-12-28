@@ -1,13 +1,16 @@
 <?php
 // Inclure la classe Tache
 require_once 'taskModel.php';
+require_once 'userModel.php';
 require_once 'config.php'; // Inclure la connexion PDO depuis config.php
 
 // Créer une instance de TaskModel en passant l'objet PDO
 $taskModel = new TaskModel($pdo);  // Ici, vous passez la connexion PDO à TaskModel
-
+$userModel = new  UserModel($pdo);
 // Récupérer toutes les tâches
 $tasks = $taskModel->getAllTasks();  // Appeler la méthode pour obtenir toutes les tâches
+$users = $userModel->getAllUsers();
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
