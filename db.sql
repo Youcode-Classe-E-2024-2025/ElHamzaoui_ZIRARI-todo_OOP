@@ -1,6 +1,7 @@
 CREATE DATABASE todo_list ;
 USE todo_list;
 
+
 CREATE TABLE tasks (
     id_tache INT AUTO_INCREMENT PRIMARY KEY,  -- Un identifiant unique pour chaque tâche
     title_tache VARCHAR(255) NOT NULL,        -- Le titre de la tâche (chaîne de caractères de max 255 caractères)
