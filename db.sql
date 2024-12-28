@@ -1,4 +1,4 @@
--- Active: 1733492701458@@127.0.0.1@3306@information_schema
+
 CREATE DATABASE todo_list ;
 
 USE todo_list;
@@ -31,3 +31,4 @@ CREATE TABLE assignments (
     FOREIGN KEY (task_id) REFERENCES tasks(id_tache) ON DELETE CASCADE,  -- Clé étrangère vers la table tasks
     FOREIGN KEY (user_id) REFERENCES users(id_user) ON DELETE CASCADE   -- Clé étrangère vers la table users
 );
+
