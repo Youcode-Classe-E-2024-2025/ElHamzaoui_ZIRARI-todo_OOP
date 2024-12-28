@@ -19,3 +19,5 @@ CREATE TABLE users (
     role_users ENUM('user', 'admin') NOT NULL
 );
 
+INSERT INTO users (email_user, password_users, role_users)
+VALUES ('example@example.com', 'password123', 'admin');
