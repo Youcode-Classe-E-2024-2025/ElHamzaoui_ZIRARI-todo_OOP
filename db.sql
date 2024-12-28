@@ -21,3 +21,13 @@ CREATE TABLE users (
 
 INSERT INTO users (email_user, password_users, role_users)
 VALUES ('example@example.com', 'password123', 'admin');
+
+CREATE TABLE assignments (
+    id_assignment INT AUTO_INCREMENT PRIMARY KEY,  -- Identifiant unique pour chaque assignment
+    task_id INT NOT NULL,                          -- Identifiant de la tâche
+    user_id INT NOT NULL,                          -- Identifiant de l'utilisateur
+    status_tache ENUM('to do', 'doing', 'done') NOT NULL DEFAULT 'to do',  -- Statut de la tâche
+    assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Date et heure d'assignation
+    FOREIGN KEY (task_id) REFERENCES tasks(id_tache) ON DELETE CASCADE,  -- Clé étrangère vers la table tasks
+    FOREIGN KEY (user_id) REFERENCES users(id_user) ON DELETE CASCADE   -- Clé étrangère vers la table users
+);
