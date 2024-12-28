@@ -1,6 +1,6 @@
 <?php
-require '../model/TaskModel.php';
-require '../../config.php';
+require_once 'TaskModel.php';
+require_once 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Récupérer les données du formulaire
@@ -17,18 +17,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $taskModel->addTask($title, $description, $date, $status, $priority);
 
         // Rediriger après l'ajout de la tâche
-        header("Location: ../view/taskForm.php");
+        header("Location: index.php");
         exit;
     }
 }
 
 // Code pour supprimer une tâche
-if (isset($_GET['delete'])) {
-    $taskId = $_GET['delete'];
+if (isset($_GET['id'])) {
+    $taskId = $_GET['id'];
     $taskModel = new TaskModel($pdo);
     $taskModel->deleteTask($taskId);
-
-    header("Location: ../view/taskForm.php");
+    header("Location: index.php");
     exit;
 }
+
 ?>
