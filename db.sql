@@ -1,4 +1,4 @@
--- Active: 1733492701458@@127.0.0.1@3306@gestion_packages
+-- Active: 1733492701458@@127.0.0.1@3306@information_schema
 CREATE DATABASE todo_list ;
 
 USE todo_list;
@@ -12,6 +12,10 @@ CREATE TABLE tasks (
     priority_tache ENUM('P1', 'P2', 'P3') NOT NULL  -- La priorité de la tâche (P1, P2 ou P3)
 );
 
-
-
+CREATE TABLE users (
+    id_user INT AUTO_INCREMENT PRIMARY KEY,  -- Un identifiant unique pour chaque tâche
+    email_user VARCHAR(255) NOT NULL,  
+    password_users VARCHAR(255) NOT NULL,
+    role_users ENUM('user', 'admin') NOT NULL
+);
 
