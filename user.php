@@ -1,3 +1,23 @@
+<?php
+session_start();
+require_once 'taskModel.php';
+require_once 'userModel.php';
+require_once 'config.php';
+
+$taskModel = new TaskModel($pdo);
+$userModel = new UserModel($pdo);
+
+// Vérifier si l'utilisateur est connecté
+if (!isset($_SESSION['user_id'])) {
+    die("Vous devez être connecté pour voir vos tâches.");
+}
+
+$userId = $_SESSION['user_id'];
+
+// Récupérer les tâches assignées à l'utilisateur
+$assignedTasks = $taskModel->getTasksByUserId($userId);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,106 +30,125 @@
             darkMode: 'class',
         };
     </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 dark:text-gray-200 min-h-screen font-sans transition-colors duration-300">
-    <!-- Header -->
     <header class="bg-white dark:bg-gray-800 shadow-md py-4 px-6 flex justify-between items-center">
-        <!-- Logo -->
         <div class="flex items-center space-x-4">
-        <img src="images/logo.png" alt="Logo"  class="h-12 w-13 rounded-full">
-            
+            <img src="images/logo.png" alt="Logo" class="h-12 w-13 rounded-full">
             <h1 class="text-xl font-bold text-gray-800 dark:text-gray-200">TaskFlow</h1>
         </div>
-
-        <!-- Icons -->
-        <div class="flex items-center space-x-6">
-            <!-- Dark Mode Toggle -->
-            <button id="theme-toggle" class="p-2 bg-gray-200 dark:bg-gray-700 rounded-full shadow-md">
-                <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800 dark:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-7.364l-1.414 1.414M6.05 17.95l-1.414-1.414M18.364 18.364l-1.414-1.414M6.05 6.05L4.636 7.464M12 8a4 4 0 100 8 4 4 0 000-8z" />
-                </svg>
+        <div>
+            <button id="theme-toggle" class="p-2 rounded-full">
+                <i id="theme-icon" class="fas fa-sun text-yellow-500"></i>
             </button>
-
-          
+            <a href="deconnexion.php" class="p-2 rounded-full text-gray-800 dark:text-gray-200 hover:text-gray-500">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
         </div>
     </header>
 
-    <!-- Main Content -->
     <div class="container mx-auto py-12 px-4">
-        <!-- Page Title -->
-        <h1 class="text-4xl font-extrabold text-center mb-12">TaskFlow Dashboard</h1>
+        <h1 class="text-4xl font-extrabold text-center mb-12">TaskFlow</h1>
 
-        <!-- Sections -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- To Do Section -->
-            <div id="todo" class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border-t-4 border-blue-500">
+            <div id="todo" class="task-section bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border-t-4 border-blue-500"
+                 ondrop="drop(event)" ondragover="allowDrop(event)">
                 <h2 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">To Do</h2>
                 <ul class="space-y-4">
-                    <li class="task bg-blue-50 dark:bg-gray-700 p-4 rounded-lg shadow-sm flex justify-between items-center">
-                        <span>Design Homepage</span>
-                        <button class="move-btn bg-blue-500 text-white px-3 py-1 rounded-full text-sm">Move</button>
-                    </li>
+                    <?php foreach ($assignedTasks as $task): ?>
+                        <li id="task-<?php echo $task['id_tache']; ?>" class="task bg-blue-50 dark:bg-gray-700 p-4 rounded-lg shadow-sm flex justify-between items-center"
+                            draggable="true" ondragstart="drag(event)" data-status="to_do">
+                            <span><?php echo htmlspecialchars($task['title_tache']); ?></span>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
 
             <!-- In Progress Section -->
-            <div id="inprogress" class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border-t-4 border-yellow-500">
+            <div id="inprogress" class="task-section bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border-t-4 border-yellow-500"
+                 ondrop="drop(event)" ondragover="allowDrop(event)">
                 <h2 class="text-2xl font-semibold text-yellow-600 dark:text-yellow-400 mb-4">In Progress</h2>
-                <ul class="space-y-4">
-                    <li class="task bg-yellow-50 dark:bg-gray-700 p-4 rounded-lg shadow-sm flex justify-between items-center">
-                        <span>Fix Navbar Bug</span>
-                        <button class="move-btn bg-yellow-500 text-white px-3 py-1 rounded-full text-sm">Move</button>
-                    </li>
-                </ul>
+                <ul class="space-y-4"></ul>
             </div>
 
             <!-- Done Section -->
-            <div id="done" class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border-t-4 border-green-500">
+            <div id="done" class="task-section bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border-t-4 border-green-500"
+                 ondrop="drop(event)" ondragover="allowDrop(event)">
                 <h2 class="text-2xl font-semibold text-green-600 dark:text-green-400 mb-4">Done</h2>
-                <ul class="space-y-4">
-                    <li class="task bg-green-50 dark:bg-gray-700 p-4 rounded-lg shadow-sm flex justify-between items-center">
-                        <span>Deploy to Server</span>
-                        <button class="move-btn bg-green-500 text-white px-3 py-1 rounded-full text-sm">Move</button>
-                    </li>
-                </ul>
+                <ul class="space-y-4"></ul>
             </div>
         </div>
     </div>
 
-  
-
-    <!-- JavaScript -->
     <script>
+        // Toggle Dark Mode
         const themeToggle = document.getElementById('theme-toggle');
         const themeIcon = document.getElementById('theme-icon');
         const body = document.body;
-        const userIcon = document.getElementById('user-icon');
-        const loginModal = document.getElementById('login-modal');
-        const closeModal = document.getElementById('close-modal');
 
-        // Toggle Dark Mode
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark');
+            themeIcon.classList.replace('fa-sun', 'fa-moon');
+        }
+
         themeToggle.addEventListener('click', () => {
             body.classList.toggle('dark');
             if (body.classList.contains('dark')) {
-                themeIcon.innerHTML = `
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21.752 15.002A9.718 9.718 0 0112 21c-5.523 0-10-4.477-10-10 0-4.106 2.468-7.626 6.002-9.168a0.75 0.75 0 01.998.75A7.5 7.5 0 1019.418 14a0.75 0.75 0 01.75.998c-.523 1.153-1.192 2.198-2.002 3.004z" />
-                `;
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'dark');
             } else {
-                themeIcon.innerHTML = `
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-7.364l-1.414 1.414M6.05 17.95l-1.414-1.414M18.364 18.364l-1.414-1.414M6.05 6.05L4.636 7.464M12 8a4 4 0 100 8 4 4 0 000-8z" />
-                `;
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'light');
             }
         });
 
-        // Show Login Modal
-        userIcon.addEventListener('click', () => {
-            loginModal.classList.remove('hidden');
-        });
+        // Drag-and-Drop Functions
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
 
-        // Close Login Modal
-        closeModal.addEventListener('click', () => {
-            loginModal.classList.add('hidden');
-        });
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            const data = ev.dataTransfer.getData("text");
+            const draggedTask = document.getElementById(data);
+            const newStatus = ev.target.id;
+
+            if (ev.target.classList.contains('task-section')) {
+                ev.target.appendChild(draggedTask);
+            }
+
+            updateTaskStatus(draggedTask, newStatus);
+        }
+
+        function updateTaskStatus(taskElement, newStatus) {
+            const taskId = taskElement.id.replace('task-', '');
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'updateTaskStatus.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        console.log('Statut de la tâche mis à jour');
+                    } else {
+                        console.log('Erreur lors de la mise à jour');
+                    }
+                }
+            };
+
+            const data = JSON.stringify({
+                taskId: taskId,
+                status: newStatus
+            });
+            xhr.send(data);
+        }
     </script>
 </body>
 </html>

@@ -1,3 +1,4 @@
+-- Active: 1733492701458@@127.0.0.1@3306@mon_db
 CREATE DATABASE todo_list ;
 USE todo_list;
 
@@ -31,3 +32,7 @@ CREATE TABLE assignments (
     FOREIGN KEY (user_id) REFERENCES users(id_user) ON DELETE CASCADE   -- Clé étrangère vers la table users
 );
 
+ALTER TABLE users
+ADD COLUMN nom_user VARCHAR(255) NOT NULL AFTER id_user;
+INSERT INTO users (nom_user, email_user, password_users, role_users)
+VALUES ('Admin', 'example@example.com', 'password123', 'admin');

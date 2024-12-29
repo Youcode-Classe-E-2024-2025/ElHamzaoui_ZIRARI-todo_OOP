@@ -3,14 +3,18 @@
 require_once 'taskModel.php';
 require_once 'userModel.php';
 require_once 'config.php'; // Inclure la connexion PDO depuis config.php
+// Dans votre fichier principal (par exemple, index.php)
+require_once 'assignModel.php';
+
 
 // Créer une instance de TaskModel en passant l'objet PDO
 $taskModel = new TaskModel($pdo);  // Ici, vous passez la connexion PDO à TaskModel
 $userModel = new  UserModel($pdo);
+$assignModel = new AssignModel($pdo);
 
 $tasks = $taskModel->getAllTasks();  // Appeler la méthode pour obtenir toutes les tâches
 $users = $userModel->getAllUsers();
-
+$assignments = $assignModel->getAllAssignments();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -19,108 +23,7 @@ $users = $userModel->getAllUsers();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interface Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Style général */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        h1 {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-evenly;
-            padding: 20px;
-        }
-
-        /* Style de la carte de chaque tâche */
-        .task-card {
-            background-color: #fff;
-            width: 300px;
-            margin: 10px;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-            position: relative;
-        }
-
-        .task-card:hover {
-            transform: scale(1.05);
-        }
-
-        /* Style du titre de la tâche */
-        .task-card h3 {
-            margin: 0;
-            font-size: 1.2em;
-        }
-
-        /* Style pour les détails cachés au survol */
-        .task-details {
-            display: none;
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .task-card:hover .task-details {
-            display: block;
-        }
-
-        /* Style pour les boutons */
-        .task-card button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-right: 10px;
-            transition: background-color 0.3s;
-        }
-
-        .task-card button:hover {
-            background-color: #45a049;
-        }
-
-        /* Style du formulaire */
-        form {
-            width: 50%;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        form input, form textarea, form select {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        form input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        form input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 font-sans">
 
@@ -130,9 +33,9 @@ $users = $userModel->getAllUsers();
             <img src="images/logo.png" alt="Logo" class="w-20 h-15 mr-4">
             <h1 class="text-2xl font-bold">Interface Admin</h1>
         </div>
-        <button class="flex items-center space-x-2">
-        <img src="images/dec.png" alt="Logout" class="w-6 h-6">
-        </button>
+        <a href="deconnexion.php" class="p-2 rounded-full text-gray-800 dark:text-gray-200 hover:text-gray-500">
+            <i class="fas fa-sign-out-alt"></i> <!-- Icône de la déconnexion -->
+        </a>
     </header>
 
     <div class="flex">
@@ -161,22 +64,34 @@ $users = $userModel->getAllUsers();
                 <div id="tasks" class="section hidden">
                     <h2 class="text-xl font-bold mb-4">Gestion des Tâches</h2>
                     <p>Voici la liste des tâches.</p>
-                    <div class="container">
+                    <div class="container mx-auto p-4">
+                    <div class="container mx-auto p-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <?php foreach ($tasks as $tacheItem): ?>
-            <div class="task-card">
-                <h3><?php echo htmlspecialchars($tacheItem['title_tache']); ?></h3>
-                <div class="task-details">
+            <div class="bg-white p-5 rounded-lg shadow-lg transform transition-transform duration-200 hover:scale-105 group">
+                <h3 class="text-xl font-semibold mb-2"><?php echo htmlspecialchars($tacheItem['title_tache']); ?></h3>
+                <div class="task-details hidden group-hover:block mt-2 p-3 bg-gray-100 border border-gray-300 rounded-lg">
                     <p><strong>Description:</strong> <?php echo htmlspecialchars($tacheItem['descr_tache']); ?></p>
                     <p><strong>Date d'échéance:</strong> <?php echo htmlspecialchars($tacheItem['date_tache']); ?></p>
                     <p><strong>Priorité:</strong> <?php echo htmlspecialchars($tacheItem['status_tache']); ?></p>
                     <p><strong>Responsable:</strong> <?php echo htmlspecialchars($tacheItem['priority_tache']); ?></p>
                 </div>
                 <!-- Boutons pour modifier et supprimer -->
-                <button onclick="window.location.href='modifier_tache.php?id=<?php echo $tacheItem['id_tache']; ?>'">Modifier</button>
-                <button onclick="window.location.href='TaskController.php?id=<?php echo $tacheItem['id_tache']; ?>'">Supprimer</button>
+                <div class="mt-4">
+                    <button onclick="window.location.href='modifier_tache.php?id=<?php echo $tacheItem['id_tache']; ?>'" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 mr-2">
+                        Modifier
+                    </button>
+                    <button onclick="window.location.href='TaskController.php?id=<?php echo $tacheItem['id_tache']; ?>'" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">
+                        Supprimer
+                    </button>
+                </div>
             </div>
         <?php endforeach; ?>
     </div>
+</div>
+
+</div>
+
 
                 </div>
                 <div id="users" class="section hidden">
@@ -184,9 +99,28 @@ $users = $userModel->getAllUsers();
                     <p>Voici la liste des utilisateurs.</p>
                 </div>
                 <div id="assignments" class="section hidden">
-                    <h2 class="text-xl font-bold mb-4">Gestion des Assignements</h2>
-                    <p>Voici la liste des assignements.</p>
-                </div>
+    <h2 class="text-xl font-bold mb-4">Gestion des Assignements</h2>
+    <p>Voici la liste des assignements.</p>
+    <table class="min-w-full bg-white border border-gray-300 mt-4">
+        <thead>
+            <tr>
+                <th class="px-4 py-2 border">Utilisateur</th>
+                <th class="px-4 py-2 border">Tâche</th>
+                <th class="px-4 py-2 border">État</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($assignments as $assignment): ?>
+                <tr>
+                    <td class="px-4 py-2 border"><?php echo htmlspecialchars($assignment['email_user']); ?></td>
+                    <td class="px-4 py-2 border"><?php echo htmlspecialchars($assignment['title_tache']); ?></td>
+                    <td class="px-4 py-2 border"><?php echo htmlspecialchars($assignment['status_tache']); ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
             </div>
         </div>
     </div>

@@ -7,14 +7,14 @@ class UserModel {
         $this->pdo = $pdo;
     }
 
-    public function addUser($email_user, $password_users, $role_users) {
+    public function addUser($nom_user, $email_user, $password_users, $role_users) {
         // Ne codons plus en dur le rôle 'user', mais utilisons un paramètre
-        $sql = "INSERT INTO users (email_user, password_users, role_users) 
-                VALUES (?, ?, ?)";
+        $sql = "INSERT INTO users (nom_user,email_user, password_users, role_users) 
+                VALUES (?,?, ?, ?)";
         $stmt = $this->pdo->prepare($sql);
         
         // Passer les 3 paramètres nécessaires
-        $stmt->execute([$email_user, $password_users, $role_users]);
+        $stmt->execute([$nom_user,$email_user, $password_users, $role_users]);
     }
 
     public function getAllUsers() {
