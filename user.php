@@ -58,7 +58,7 @@ $assignedTasks = $taskModel->getTasksByUserId($userId);
     <!-- Main Content -->
     <div class="container mx-auto py-12 px-4">
         <!-- Page Title -->
-        <h1 class="text-4xl font-extrabold text-center mb-12">TaskFlow Dashboard</h1>
+        <h1 class="text-4xl font-extrabold text-center mb-12">TaskFlow </h1>
 
         <!-- Sections -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
