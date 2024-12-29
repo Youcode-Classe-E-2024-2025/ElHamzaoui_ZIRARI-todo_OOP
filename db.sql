@@ -31,3 +31,5 @@ CREATE TABLE assignments (
     FOREIGN KEY (user_id) REFERENCES users(id_user) ON DELETE CASCADE   -- Clé étrangère vers la table users
 );
 
+ALTER TABLE users
+ADD COLUMN nom_user VARCHAR(255) NOT NULL AFTER id_user;
