@@ -1,3 +1,4 @@
+-- Active: 1733492701458@@127.0.0.1@3306@mon_db
 CREATE DATABASE todo_list ;
 USE todo_list;
 

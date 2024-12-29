@@ -3,14 +3,18 @@
 require_once 'taskModel.php';
 require_once 'userModel.php';
 require_once 'config.php'; // Inclure la connexion PDO depuis config.php
+// Dans votre fichier principal (par exemple, index.php)
+require_once 'assignModel.php';
+
 
 // Créer une instance de TaskModel en passant l'objet PDO
 $taskModel = new TaskModel($pdo);  // Ici, vous passez la connexion PDO à TaskModel
 $userModel = new  UserModel($pdo);
+$assignModel = new AssignModel($pdo);
 
 $tasks = $taskModel->getAllTasks();  // Appeler la méthode pour obtenir toutes les tâches
 $users = $userModel->getAllUsers();
-
+$assignments = $assignModel->getAllAssignments();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -109,7 +113,7 @@ $users = $userModel->getAllUsers();
                 <tr>
                     <td class="px-4 py-2 border"><?php echo htmlspecialchars($assignment['email_user']); ?></td>
                     <td class="px-4 py-2 border"><?php echo htmlspecialchars($assignment['title_tache']); ?></td>
-                    <td class="px-4 py-2 border"><?php echo htmlspecialchars($assignment['status']); ?></td>
+                    <td class="px-4 py-2 border"><?php echo htmlspecialchars($assignment['status_tache']); ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

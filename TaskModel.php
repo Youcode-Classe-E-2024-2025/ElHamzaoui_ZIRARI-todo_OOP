@@ -62,17 +62,20 @@ public function assignTaskToUser($taskId, $userId) {
     return $stmt->execute();
 }
 
-    // TaskModel.php
-public function getTasksByUserId($userId) {
-    $query = "SELECT t.* FROM tasks t
-              JOIN assignments ta ON t.id_tache = ta.task_id
-              WHERE ta.user_id = :user_id";
-    $stmt = $this->pdo->prepare($query);
-    $stmt->bindParam(':user_id', $userId);
-    $stmt->execute();
-    
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+    // Récupérer les tâches assignées à un utilisateur spécifique
+    public function getTasksByUserId($userId) {
+        // Sélectionner les tâches assignées à cet utilisateur
+        $sql = "SELECT t.*
+                FROM tasks t
+                JOIN assignments a ON t.id_tache = a.task_id
+                WHERE a.user_id = :user_id";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 }
 ?>

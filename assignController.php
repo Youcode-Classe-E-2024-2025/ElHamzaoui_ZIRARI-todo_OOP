@@ -1,28 +1,18 @@
 <?php
-session_start();
-require_once 'taskModel.php';
-require_once 'userModel.php';
+// assignController.php
+require_once 'assignModel.php';
 require_once 'config.php';
 
-$taskModel = new TaskModel($pdo);
-$userModel = new UserModel($pdo);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $userId = $_POST['user_id'];
+    $taskId = $_POST['task_id'];
+    $status = $_POST['status'];
 
-// Assurez-vous que l'utilisateur est connecté
-if (!isset($_SESSION['user_id'])) {
-    die("Vous devez être connecté pour assigner des tâches.");
-}
+    $assignModel = new AssignModel($pdo);
+    $assignModel->assignTask($userId, $taskId, $status);
 
-$userId = $_SESSION['user_id'];
-$taskId = $_POST['task_id'];
-
-// Assigner la tâche à l'utilisateur
-$assignSuccess = $taskModel->assignTaskToUser($taskId, $userId);
-
-if ($assignSuccess) {
-    // Rediriger vers la page user.php ou afficher un message de succès
-    header('Location: user.php');
+    // Rediriger vers la page d'accueil ou la page actuelle après l'assignation
+    header('Location: index.php');
     exit;
-} else {
-    echo "Erreur lors de l'assignation de la tâche.";
 }
 ?>
