@@ -65,7 +65,7 @@ public function assignTaskToUser($taskId, $userId) {
     // TaskModel.php
 public function getTasksByUserId($userId) {
     $query = "SELECT t.* FROM tasks t
-              JOIN task_assignments ta ON t.id_tache = ta.task_id
+              JOIN assignments ta ON t.id_tache = ta.task_id
               WHERE ta.user_id = :user_id";
     $stmt = $this->pdo->prepare($query);
     $stmt->bindParam(':user_id', $userId);

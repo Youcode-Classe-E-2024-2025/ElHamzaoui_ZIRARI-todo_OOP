@@ -94,9 +94,28 @@ $users = $userModel->getAllUsers();
                     <p>Voici la liste des utilisateurs.</p>
                 </div>
                 <div id="assignments" class="section hidden">
-                    <h2 class="text-xl font-bold mb-4">Gestion des Assignements</h2>
-                    <p>Voici la liste des assignements.</p>
-                </div>
+    <h2 class="text-xl font-bold mb-4">Gestion des Assignements</h2>
+    <p>Voici la liste des assignements.</p>
+    <table class="min-w-full bg-white border border-gray-300 mt-4">
+        <thead>
+            <tr>
+                <th class="px-4 py-2 border">Utilisateur</th>
+                <th class="px-4 py-2 border">Tâche</th>
+                <th class="px-4 py-2 border">État</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($assignments as $assignment): ?>
+                <tr>
+                    <td class="px-4 py-2 border"><?php echo htmlspecialchars($assignment['email_user']); ?></td>
+                    <td class="px-4 py-2 border"><?php echo htmlspecialchars($assignment['title_tache']); ?></td>
+                    <td class="px-4 py-2 border"><?php echo htmlspecialchars($assignment['status']); ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
             </div>
         </div>
     </div>
