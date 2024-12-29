@@ -23,6 +23,7 @@ $assignments = $assignModel->getAllAssignments();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interface Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 font-sans">
 
@@ -32,9 +33,9 @@ $assignments = $assignModel->getAllAssignments();
             <img src="images/logo.png" alt="Logo" class="w-20 h-15 mr-4">
             <h1 class="text-2xl font-bold">Interface Admin</h1>
         </div>
-        <button class="flex items-center space-x-2">
-        <img src="images/dec.png" alt="Logout" class="w-6 h-6">
-        </button>
+        <a href="deconnexion.php" class="p-2 rounded-full text-gray-800 dark:text-gray-200 hover:text-gray-500">
+            <i class="fas fa-sign-out-alt"></i> <!-- Icône de la déconnexion -->
+        </a>
     </header>
 
     <div class="flex">
