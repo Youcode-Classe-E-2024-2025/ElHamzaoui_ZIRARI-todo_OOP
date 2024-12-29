@@ -30,6 +30,8 @@ $assignedTasks = $taskModel->getTasksByUserId($userId);
             darkMode: 'class',
         };
     </script>
+    <!-- Ajouter Font Awesome pour les icônes -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 dark:text-gray-200 min-h-screen font-sans transition-colors duration-300">
     <!-- Header -->
@@ -38,6 +40,11 @@ $assignedTasks = $taskModel->getTasksByUserId($userId);
             <img src="images/logo.png" alt="Logo" class="h-12 w-13 rounded-full">
             <h1 class="text-xl font-bold text-gray-800 dark:text-gray-200">TaskFlow</h1>
         </div>
+        
+        <!-- Ajouter un bouton pour basculer entre le mode sombre et clair -->
+        <button id="theme-toggle" class="p-2 rounded-full">
+            <i id="theme-icon" class="fas fa-sun text-yellow-500"></i> <!-- Icône du soleil au départ -->
+        </button>
     </header>
 
     <!-- Main Content -->
@@ -82,13 +89,23 @@ $assignedTasks = $taskModel->getTasksByUserId($userId);
         const themeIcon = document.getElementById('theme-icon');
         const body = document.body;
 
+        // Vérifier si un thème est déjà enregistré dans le localStorage
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark');
+            themeIcon.classList.replace('fa-sun', 'fa-moon'); // Icône de la lune
+        }
+
         // Toggle Dark Mode
         themeToggle.addEventListener('click', () => {
             body.classList.toggle('dark');
+            
+            // Changer l'icône en fonction du mode actuel
             if (body.classList.contains('dark')) {
-                themeIcon.innerHTML = `...`; // Update icon
+                themeIcon.classList.replace('fa-sun', 'fa-moon'); // Lune en mode sombre
+                localStorage.setItem('theme', 'dark'); // Sauvegarder le thème dans localStorage
             } else {
-                themeIcon.innerHTML = `...`; // Update icon
+                themeIcon.classList.replace('fa-moon', 'fa-sun'); // Soleil en mode clair
+                localStorage.setItem('theme', 'light'); // Sauvegarder le thème dans localStorage
             }
         });
     </script>
