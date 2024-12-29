@@ -1,3 +1,24 @@
+<?php
+session_start();
+require_once 'taskModel.php';
+require_once 'userModel.php';
+require_once 'config.php';
+
+$taskModel = new TaskModel($pdo);
+$userModel = new UserModel($pdo);
+
+// Vérifier si l'utilisateur est connecté
+if (!isset($_SESSION['user_id'])) {
+    die("Vous devez être connecté pour voir vos tâches.");
+}
+
+$userId = $_SESSION['user_id'];
+
+// Récupérer les tâches assignées à l'utilisateur
+$assignedTasks = $taskModel->getTasksByUserId($userId);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,10 +66,12 @@
             <div id="todo" class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border-t-4 border-blue-500">
                 <h2 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">To Do</h2>
                 <ul class="space-y-4">
-                    <li class="task bg-blue-50 dark:bg-gray-700 p-4 rounded-lg shadow-sm flex justify-between items-center">
-                        <span>Design Homepage</span>
-                        <button class="move-btn bg-blue-500 text-white px-3 py-1 rounded-full text-sm">Move</button>
-                    </li>
+                    <?php foreach ($assignedTasks as $task): ?>
+                        <li class="task bg-blue-50 dark:bg-gray-700 p-4 rounded-lg shadow-sm flex justify-between items-center">
+                            <span><?php echo htmlspecialchars($task['title_tache']); ?></span>
+                            <button class="move-btn bg-blue-500 text-white px-3 py-1 rounded-full text-sm">Déplacer</button>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
 

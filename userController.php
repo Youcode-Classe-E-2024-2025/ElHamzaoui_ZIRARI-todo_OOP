@@ -1,7 +1,7 @@
 <?php
 require_once 'userModel.php';
 require_once 'config.php';
-
+session_start(); 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo"hi";
     // Récupérer les données du formulaire
@@ -14,9 +14,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $userModel->addUser($email, $password,'user');
         
         if($email == "example@example.com" && $password == "password123"){
+            $_SESSION['user_id'] = "example@example.com";
+            $_SESSION['user_id'] = "password123";
             // Rediriger après l'ajout de la tâche
              header("Location: taskForm.php");
         }else{
+            $_SESSION['user_id'] = $email['id_user'];
+            $_SESSION['user_id'] = $password['id_user'];
              // Rediriger après l'ajout de la tâche
              header("Location: user.php");
         }
