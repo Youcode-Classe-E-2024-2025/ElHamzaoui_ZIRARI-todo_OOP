@@ -40,11 +40,15 @@ $assignedTasks = $taskModel->getTasksByUserId($userId);
             <img src="images/logo.png" alt="Logo" class="h-12 w-13 rounded-full">
             <h1 class="text-xl font-bold text-gray-800 dark:text-gray-200">TaskFlow</h1>
         </div>
-        
+        <div>
         <!-- Ajouter un bouton pour basculer entre le mode sombre et clair -->
         <button id="theme-toggle" class="p-2 rounded-full">
             <i id="theme-icon" class="fas fa-sun text-yellow-500"></i> <!-- Icône du soleil au départ -->
         </button>
+        <a href="deconnexion.php" class="p-2 rounded-full text-gray-800 dark:text-gray-200 hover:text-gray-500">
+            <i class="fas fa-sign-out-alt"></i> <!-- Icône de la déconnexion -->
+        </a>
+        </div>
     </header>
 
     <!-- Main Content -->
