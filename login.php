@@ -22,7 +22,7 @@
     <!-- Section droite du formulaire -->
     <div class="w-1/2 p-8">
       <h2 class="text-2xl font-bold text-gray-100 mb-4">Connexion</h2>
-      <form id="loginForm" class="space-y-4" action="userController.php" method="POST">
+      <form id="loginForm" class="space-y-4" action="" method="POST">
         <div>
           <label for="email" class="block text-sm font-medium text-gray-300">Adresse Email</label>
           <input type="email" id="email" name="email" required
