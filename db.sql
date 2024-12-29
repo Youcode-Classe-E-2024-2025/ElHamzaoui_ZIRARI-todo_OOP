@@ -33,3 +33,5 @@ CREATE TABLE assignments (
 
 ALTER TABLE users
 ADD COLUMN nom_user VARCHAR(255) NOT NULL AFTER id_user;
+INSERT INTO users (nom_user, email_user, password_users, role_users)
+VALUES ('Admin', 'example@example.com', 'password123', 'admin');

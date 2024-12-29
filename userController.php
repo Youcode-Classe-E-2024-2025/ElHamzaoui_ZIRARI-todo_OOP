@@ -14,8 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $userModel = new UserModel($pdo);
         $userModel->addUser($username, $email, $password,'user');
              header("Location: user.php");
-        
-
         exit;
     }
 }
